@@ -1,10 +1,20 @@
-# from django.shortcuts import render
+from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from .models import *
 from .serializers import *
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_profile(request):
+    user = request.user
+    profile = user.profile
+    serialized_profile = ProfileSerializer(profile, many=False)
+    return Response(serialized_profile.data)
 
 @api_view(["POST"])
 @permission_classes([]) # Why is this empty/necessary?
@@ -22,14 +32,9 @@ def create_user(request):
     )
     profile.save()
     profile_serialized = ProfileSerializer(profile)
+    profile_serialized.data.token = TokenObtainPairView.as_view()
     return Response(profile_serialized.data)
 
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
-def get_profile(request):
-    user = request.user
-    profile = user.profile
-    serializer = ProfileSerializer(profile, many=False)
-    return Response(serializer.data)
+
 
 
