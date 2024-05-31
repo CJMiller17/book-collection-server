@@ -10,6 +10,7 @@ class Profile(models.Model):
         return self.user.username
     
 class Book(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null = True)
     title = models.TextField()
     author = models.TextField()
     genre = models.TextField()      # Come back and limit the Genre's

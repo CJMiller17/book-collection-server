@@ -35,6 +35,18 @@ def create_user(request):
     profile_serialized.data.token = TokenObtainPairView.as_view()
     return Response(profile_serialized.data)
 
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_books(request):
+    user = request.user
+    books = user.book_set.all() #related name - https://docs.djangoproject.com/en/stable/topics/db/queries/#backwards-related-objects
+    books_serialized = {}
+
+    for book in books:
+        book_serialized = BookSerializer(book)
+        books_serialized[str(book_serialized.data["id"])] = book_serialized.data
+
+    return Response(books_serialized)
 
 
 
