@@ -4,6 +4,7 @@ from BookManager.models import *
 class ProfileAdmin(admin.ModelAdmin):
     pass
 
-admin.site.register(Profile, ProfileAdmin)
+My_Models = [Profile, Book]
+admin.site.register(My_Models, ProfileAdmin)
 
 # Register your models here.

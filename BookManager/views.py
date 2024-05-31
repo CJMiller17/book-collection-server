@@ -40,13 +40,13 @@ def create_user(request):
 def get_books(request):
     user = request.user
     books = user.book_set.all() #related name - https://docs.djangoproject.com/en/stable/topics/db/queries/#backwards-related-objects
-    books_serialized = {}
+    books_serialized = BookSerializer(books, many=True)
 
-    for book in books:
-        book_serialized = BookSerializer(book)
-        books_serialized[str(book_serialized.data["id"])] = book_serialized.data
+    # for book in books:
+    #     book_serialized = BookSerializer(book)
+    #     books_serialized[str(book_serialized.data["id"])] = book_serialized.data
 
-    return Response(books_serialized)
+    return Response(books_serialized.data)
 
 
 
