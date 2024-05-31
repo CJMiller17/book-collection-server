@@ -17,7 +17,7 @@ def get_profile(request):
     return Response(serialized_profile.data)
 
 @api_view(["POST"])
-@permission_classes([]) # Why is this empty/necessary?
+@permission_classes([])
 def create_user(request):
     user = User.objects.create(
         username = request.data["username"],

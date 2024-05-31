@@ -22,8 +22,7 @@ from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshVie
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("profile/", get_profile),
-    path("token/", TokenObtainPairView.as_view()),
-    path("refresh/", TokenRefreshView.as_view()),
-    path("create-user/", create_user)
-    # Need to connect books here. 
+    path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("create-user/", create_user, name="create_user")
 ]
